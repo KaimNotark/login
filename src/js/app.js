@@ -4,6 +4,7 @@
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/style.css';
+// import "./plugin";
 import UI from './config/ui.config.js';
 import { validate } from './helpers/validate.js';
 import { showInputError, removeInputError } from './views/form.js';
@@ -52,12 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // let listOfCountries = [
   //   Angarsk, Angora, Annigilations, Arislan,
   // ];
-  let listOfCountries = {
-    Angarsk: null,
-    Angora: null,
-    Annigilations: null,
-    Arisla: null,
-  };
+  // let listOfCountries = {
+  //   Angarsk: null,
+  //   Angora: null,
+  //   Annigilations: null,
+  //   Arisla: null,
+  // };
 
   // Events
   form.addEventListener('submit', e => {
@@ -122,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function initApp() {
     await getCountries();
+
   };
 
 });
