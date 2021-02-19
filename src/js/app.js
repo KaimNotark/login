@@ -10,98 +10,118 @@ import { showInputError, removeInputError } from './views/form.js';
 import { login, auth } from './services/auth.service.js';
 import { notify } from './views/notifications.js';
 import { getNews } from './services/news.service.js';
+import { getCountries } from './store/location.js';
 
-const { form, inputEmail, inputPassword } = UI;
-const inputs = [inputEmail, inputPassword];
+document.addEventListener("DOMContentLoaded", () => {
+  initApp();
 
-const { auth: {
-  auth_form,
-  email,
-  password,
-  nickname,
-  first_name,
-  last_name,
-  phone,
-  gender_orientation,
-  city,
-  country,
-  date_of_birth_day,
-  date_of_birth_month,
-  date_of_birth_year,
-} } = UI;
+  const { form, inputEmail, inputPassword } = UI;
+  const inputs = [inputEmail, inputPassword];
 
-const authInputs = [
-  email,
-  password,
-  nickname,
-  first_name,
-  last_name,
-  phone,
-  gender_orientation,
-  city,
-  country,
-  date_of_birth_day,
-  date_of_birth_month,
-  date_of_birth_year,
-];
+  const { auth: {
+    auth_form,
+    email,
+    password,
+    nickname,
+    first_name,
+    last_name,
+    phone,
+    gender_orientation,
+    city,
+    country,
+    date_of_birth_day,
+    date_of_birth_month,
+    date_of_birth_year,
+  } } = UI;
 
-// Events
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  onFormSubmit();
-});
+  const authInputs = [
+    email,
+    password,
+    nickname,
+    first_name,
+    last_name,
+    phone,
+    gender_orientation,
+    city,
+    country,
+    date_of_birth_day,
+    date_of_birth_month,
+    date_of_birth_year,
+  ];
 
-auth_form.addEventListener('submit', e => {
-  e.preventDefault();
-  onAuthFormSubmit();
-});
+  // let listOfCountries = [
+  //   Angarsk, Angora, Annigilations, Arislan,
+  // ];
+  let listOfCountries = {
+    Angarsk: null,
+    Angora: null,
+    Annigilations: null,
+    Arisla: null,
+  };
 
-inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
-
-// Handlers
-async function onFormSubmit() {
-
-  const isValidForm = inputs.every(el => {
-    const isValidInput = validate(el);
-    if (!isValidInput) { showInputError(el); };
-
-    return isValidInput;
+  // Events
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    onFormSubmit();
   });
 
-  if (!isValidForm) return;
+  auth_form.addEventListener('submit', e => {
+    e.preventDefault();
+    onAuthFormSubmit();
+  });
 
-  try {
-    await login(inputEmail.value, inputPassword.value);
-    await getNews();
+  inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
 
-    form.reset();
-    notify({ msg: 'Login success', className: 'alert-success' })
-  } catch (error) {
-    notify({ msg: 'Login faild', className: 'alert-danger' })
+  // Handlers
+  async function onFormSubmit() {
 
-  }
+    const isValidForm = inputs.every(el => {
+      const isValidInput = validate(el);
+      if (!isValidInput) { showInputError(el); };
 
-};
+      return isValidInput;
+    });
 
-async function onAuthFormSubmit() {
-  console.log('onAuthFormSubmit is RUN');
-  try {
-    await auth(
-      email.value,
-      password.value,
-      nickname.value,
-      first_name.value,
-      last_name.value,
-      phone.value,
-      gender_orientation.value,
-      city.value,
-      country.value,
-      date_of_birth_day.value,
-      date_of_birth_month.value,
-      date_of_birth_year.value,
-    );
-    auth_form.reset();
-  } catch (error) {
-    console.log("onAuthFormSubmit--ERROR", error);
-  }
-};
+    if (!isValidForm) return;
+
+    try {
+      await login(inputEmail.value, inputPassword.value);
+      await getNews();
+
+      form.reset();
+      notify({ msg: 'Login success', className: 'alert-success' })
+    } catch (error) {
+      notify({ msg: 'Login faild', className: 'alert-danger' })
+
+    }
+
+  };
+
+  async function onAuthFormSubmit() {
+    console.log('onAuthFormSubmit is RUN');
+    try {
+      await auth(
+        email.value,
+        password.value,
+        nickname.value,
+        first_name.value,
+        last_name.value,
+        phone.value,
+        gender_orientation.value,
+        city.value,
+        country.value,
+        date_of_birth_day.value,
+        date_of_birth_month.value,
+        date_of_birth_year.value,
+      );
+      auth_form.reset();
+    } catch (error) {
+      console.log("onAuthFormSubmit--ERROR", error);
+    }
+  };
+
+  async function initApp() {
+    await getCountries();
+  };
+
+});
