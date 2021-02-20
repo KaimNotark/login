@@ -1,15 +1,17 @@
 import axios from '../plugins/axios';
 import API_ENV from '../config/api.config.js';
 
-export async function getCountries() {
+export const data = getCountriesForAutocomplete();
+
+async function getCountriesForAutocomplete() {
   try {
     const response = await axios.get(
       `${API_ENV.countriesURL}`
     );
-    console.log('getCountries--RESP', response);
+    // console.log('getCountries--RESP', response);
 
     const countriesArray = convertCountriesToArray(response);
-    console.log('countriesArray--', countriesArray);
+    // console.log('countriesArray--', countriesArray);
 
     const countries = convertCountries(countriesArray);
     console.log('countries--', countries);

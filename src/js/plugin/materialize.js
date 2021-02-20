@@ -10,15 +10,15 @@ import 'materialize-css/dist/js/materialize.min.js'
 // }
 
 // Init autocomplete
-const autocomplete = document.querySelectorAll('.autocomplete');
-M.Autocomplete.init(autocomplete, {
-  data: {
-    Angarsk: null,
-    Angora: null,
-    Annigilations: null,
-    Arisla: null,
-  }
-});
+// const autocomplete = document.querySelectorAll('.autocomplete');
+// M.Autocomplete.init(autocomplete, {
+//   data: {
+//     Angarsk: null,
+//     Angora: null,
+//     Annigilations: null,
+//     Arisla: null,
+//   }
+// });
 
 export function getAutocompleteInstance(elem) {
   return M.Autocomplete.getInstance(elem);
