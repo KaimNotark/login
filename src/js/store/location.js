@@ -1,35 +1,46 @@
 import axios from '../plugins/axios';
 import API_ENV from '../config/api.config.js';
 
-export const data = getCountriesForAutocomplete();
-
-async function getCountriesForAutocomplete() {
-  try {
-    const response = await axios.get(
-      `${API_ENV.countriesURL}`
-    );
-    // console.log('getCountries--RESP', response);
-
-    const countriesArray = convertCountriesToArray(response);
-    // console.log('countriesArray--', countriesArray);
-
-    const countries = convertCountries(countriesArray);
-    console.log('countries--', countries);
-
-    return countries;
-  } catch (err) {
-    console.log(err);
-    return Promise.reject(err);
+class Locations {
+  constructor(api) {
+    this.api = api;
+    this.shortCountriesList = null;
   }
+
+  async init() {
+    const countries = await Promise.all([this.getCountriesFromServer()]);
+    const countriesArray = this.convertCountriesToArray(countries[0]);
+    this.shortCountriesList = this.createShortCountriesList(countriesArray);
+  }
+
+  // {1: "Afghanistan", 2: "Albania", ...}
+  async getCountriesFromServer() {
+    try {
+      const response = await axios.get(
+        `${this.api.countriesURL}`
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return Promise.reject(error);
+    }
+  }
+
+  // {1: "Afghanistan", 2: "Albania", ...} --> ["Afghanistan", "Albania", ...]
+  convertCountriesToArray(countries) {
+    return Object.values(countries);
+  }
+
+  // ["Afghanistan", "Albania", ...] --> { "Afghanistan": null, ... }
+  createShortCountriesList(countries) {
+    return countries.reduce((acc, country) => {
+      acc[country] = null;
+      return acc;
+    }, {});
+  }
+
 };
 
-function convertCountriesToArray(countries) {
-  return Object.values(countries);
-};
+const locations = new Locations(API_ENV);
+export default locations;
 
-function convertCountries(countries) {
-  return countries.reduce((acc, country) => {
-    acc[country] = null;
-    return acc;
-  }, {});
-};

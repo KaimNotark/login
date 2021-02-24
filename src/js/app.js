@@ -8,11 +8,13 @@ import "./plugin";
 import UI from './config/ui.config.js';
 import formUI from './views/form.js';
 import { validate } from './helpers/validate.js';
-import { showInputError, removeInputError } from './views/form.js';
+// import { showInputError, removeInputError } from './views/form.js';
 import { login, auth } from './services/auth.service.js';
 import { notify } from './views/notifications.js';
 import { getNews } from './services/news.service.js';
-import { data } from './store/location.js';
+// import { data } from './store/location.js';
+import locations from "./store/location.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
@@ -129,9 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   async function initApp() {
+    await locations.init();
+    console.log('APP--shortCountriesList', locations.shortCountriesList);
     // await data;
-    console.log(data);
-    formUI.setAutocompleteData(data);
+    // console.log(data);
+    // formUI.setAutocompleteData(data);
 
   };
 
