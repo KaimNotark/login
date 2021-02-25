@@ -32,6 +32,18 @@
         <div class="card-body">
           <h4 class="card-title">Please Register</h4>
           <form name="authForm">
+
+            <div class="form-group input-field">
+              <label for="Country">Country</label>
+              <input type="text" class="form-control autocomplete" id="authCountry" placeholder="Country"
+                data-required="country" />
+            </div>
+            <div class="form-group input-field">
+              <label for="City">City</label>
+              <input type="text" class="form-control autocomplete" id="authCity" placeholder="City"
+                data-required="city" />
+            </div>
+
             <div class="form-group">
               <label for="email">Email address</label>
               <input type="email" class="form-control" id="authEmail" aria-describedby="emailHelp"
@@ -66,18 +78,6 @@
               <label for="Gender">Gender</label>
               <input type="text" class="form-control" id="authGender" placeholder="Gender" data-required="gender" />
             </div>
-            <div class="form-group input-field">
-              <label for="City">City</label>
-              <input type="text" class="form-control autocomplete" id="authCity" placeholder="City"
-                data-required="city" />
-            </div>
-
-            <div class="form-group input-field">
-              <label for="Country">Country</label>
-              <input type="text" class="form-control autocomplete" id="autocomplete-country" placeholder="Country"
-                data-required="country" />
-            </div>
-
             <div class="form-group">
               <label for="Birth Day">Birth Day</label>
               <input type="number" class="form-control" id="authBirthDay" placeholder="Birth Day" data-required="day" />

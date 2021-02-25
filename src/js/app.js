@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const { form, inputEmail, inputPassword } = UI;
   const inputs = [inputEmail, inputPassword];
+  let countryCode, countryName = null;
 
+  // DOM Elements
   const { auth: {
     auth_form,
     email,
@@ -36,27 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     date_of_birth_year,
   } } = UI;
 
-  const authInputs = [
-    email,
-    password,
-    nickname,
-    first_name,
-    last_name,
-    phone,
-    gender_orientation,
-    city,
-    country,
-    date_of_birth_day,
-    date_of_birth_month,
-    date_of_birth_year,
-  ];
-
-  const data = {
-    Aaabb: null,
-    aabb: null,
-    abbcc: null,
-  };
-
   // Events
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -66,6 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
   auth_form.addEventListener('submit', e => {
     e.preventDefault();
     onAuthFormSubmit();
+  });
+
+  country.addEventListener('change', () => {
+    console.log('countryInputValue--', country.value);
+
+    countryName = country.value;
+    console.log('countryName--', countryName);
+
+    countryCode = locations.countriesArray.indexOf(countryName);
+    console.log('countryCode--', countryCode);
   });
 
   inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
@@ -120,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function initApp() {
     await locations.init();
-    console.log('APP--shortCountriesList', locations.shortCountriesList);
+    // console.log('APP--shortCountriesList', locations.shortCountriesList);
     formUI.setAutocompleteData(locations.shortCountriesList);
 
   };
