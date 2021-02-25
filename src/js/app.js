@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const { form, inputEmail, inputPassword } = UI;
   const inputs = [inputEmail, inputPassword];
-  let countryCode, countryName = null;
+  let countryCode, countryName, shortCitiesList = null;
 
   // DOM Elements
   const { auth: {
@@ -49,14 +49,15 @@ document.addEventListener("DOMContentLoaded", () => {
     onAuthFormSubmit();
   });
 
-  country.addEventListener('change', () => {
-    console.log('countryInputValue--', country.value);
-
+  country.addEventListener('change', async () => {
     countryName = country.value;
-    console.log('countryName--', countryName);
-
     countryCode = locations.countriesArray.indexOf(countryName);
-    console.log('countryCode--', countryCode);
+
+    const cities = await Promise.all([locations.getCitiesFromServer(countryCode + 1)]);
+    const citiesArray = cities[0];
+    shortCitiesList = locations.createShortList(citiesArray);
+
+    formUI.setAutocompleteCitiesList(shortCitiesList);
   });
 
   inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
@@ -111,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function initApp() {
     await locations.init();
-    // console.log('APP--shortCountriesList', locations.shortCountriesList);
     formUI.setAutocompleteData(locations.shortCountriesList);
 
   };

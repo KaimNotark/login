@@ -5,20 +5,13 @@ class Locations {
   constructor(api) {
     this.api = api;
     this.shortCountriesList = null;
-    this.shortCitiesList = null;
     this.countriesArray = null;
-    this.citiesArray = null;
   }
 
   async init() {
     const countries = await Promise.all([this.getCountriesFromServer()]);
     this.countriesArray = this.convertCountriesToArray(countries[0]);
     this.shortCountriesList = this.createShortList(this.countriesArray);
-
-    const cities = await Promise.all([this.getCitiesFromServer(8)]);
-    this.citiesArray = cities[0];
-    this.shortCitiesList = this.createShortList(this.citiesArray);
-    console.log('this.shortCitiesList--', this.shortCitiesList);
   }
 
   // {1: "Afghanistan", 2: "Albania", ...}

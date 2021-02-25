@@ -14,6 +14,10 @@ class FormUI {
     this.countryAutocomplete.updateData(data);
   }
 
+  setAutocompleteCitiesList(list) {
+    this.cityAutocomplete.updateData(list);
+  }
+
 }
 
 const formUI = new FormUI(getAutocompleteInstance);
