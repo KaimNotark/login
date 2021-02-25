@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
     date_of_birth_year,
   } } = UI;
 
+  city.disabled = true;
+
   // Events
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -58,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
     shortCitiesList = locations.createShortList(citiesArray);
 
     formUI.setAutocompleteCitiesList(shortCitiesList);
+
+    city.disabled = false;
   });
 
   inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
@@ -113,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
   async function initApp() {
     await locations.init();
     formUI.setAutocompleteData(locations.shortCountriesList);
-
   };
 
 });
