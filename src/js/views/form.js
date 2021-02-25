@@ -1,31 +1,25 @@
-function inputErrorTemplate(msg) {
-  return `
-  <div class="invalid-feedback">${msg}</div>
-  `;
+import { getAutocompleteInstance } from '../plugin/materialize.js';
+
+class FormUI {
+  constructor(autocompleteInstance) {
+    this._form = document.forms['authForm'];
+    this.countryInput = document.getElementById('authCountry'); //get DOM element 'Input'
+    this.countryAutocomplete = autocompleteInstance(this.countryInput); //get Instance of DOM element
+
+    this.cityInput = document.getElementById('authCity');
+    this.cityAutocomplete = autocompleteInstance(this.cityInput);
+  }
+
+  setAutocompleteData(data) {
+    this.countryAutocomplete.updateData(data);
+  }
+
+  setAutocompleteCitiesList(list) {
+    this.cityAutocomplete.updateData(list);
+  }
+
 }
 
-/**
- * Function showInputError.
- * @param {HTMLInputElement} el 
- */
-export function showInputError(el) {
-  const parent = el.parentElement;
-  const msg = el.dataset.invalidMessage || 'Invalid input';
-  const template = inputErrorTemplate(msg);
+const formUI = new FormUI(getAutocompleteInstance);
 
-  el.classList.add('is-invalid');
-  parent.insertAdjacentHTML('beforeend', template);
-}
-
-/**
- * Function removeInputError.
- * @param {HTMLInputElement} el
- */
-export function removeInputError(el) {
-  const parent = el.parentElement;
-  const err = parent.querySelector('.invalid-feedback');
-  if (!err) return;
-
-  el.classList.remove('is-invalid');
-  parent.removeChild(err);
-}
+export default formUI;

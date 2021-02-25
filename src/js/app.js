@@ -4,44 +4,119 @@
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/style.css';
+import "./plugin";
 import UI from './config/ui.config.js';
+import formUI from './views/form.js';
 import { validate } from './helpers/validate.js';
-import { showInputError, removeInputError } from './views/form.js';
-import { login } from './services/auth.service.js';
+import { login, auth } from './services/auth.service.js';
 import { notify } from './views/notifications.js';
 import { getNews } from './services/news.service.js';
+import locations from "./store/location.js";
 
-const { form, inputEmail, inputPassword } = UI;
-const inputs = [inputEmail, inputPassword];
 
-// Events
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  onSubmit();
-});
+document.addEventListener("DOMContentLoaded", () => {
+  initApp();
 
-inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
+  const { form, inputEmail, inputPassword } = UI;
+  const inputs = [inputEmail, inputPassword];
+  let countryCode, countryName, shortCitiesList = null;
 
-// Handlers
-async function onSubmit() {
-  const isValidForm = inputs.every(el => {
-    const isValidInput = validate(el);
-    if (!isValidInput) { showInputError(el); };
+  // DOM Elements
+  const { auth: {
+    auth_form,
+    email,
+    password,
+    nickname,
+    first_name,
+    last_name,
+    phone,
+    gender_orientation,
+    city,
+    country,
+    date_of_birth_day,
+    date_of_birth_month,
+    date_of_birth_year,
+  } } = UI;
 
-    return isValidInput;
+  city.disabled = true;
+
+  // Events
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    onFormSubmit();
   });
 
-  if (!isValidForm) return;
+  auth_form.addEventListener('submit', e => {
+    e.preventDefault();
+    onAuthFormSubmit();
+  });
 
-  try {
-    await login(inputEmail.value, inputPassword.value);
-    await getNews();
+  country.addEventListener('change', async () => {
+    countryName = country.value;
+    countryCode = locations.countriesArray.indexOf(countryName);
 
-    form.reset();
-    notify({ msg: 'Login success', className: 'alert-success' })
-  } catch (error) {
-    notify({ msg: 'Login faild', className: 'alert-danger' })
+    const cities = await Promise.all([locations.getCitiesFromServer(countryCode + 1)]);
+    const citiesArray = cities[0];
+    shortCitiesList = locations.createShortList(citiesArray);
 
-  }
+    formUI.setAutocompleteCitiesList(shortCitiesList);
 
-};
+    city.disabled = false;
+  });
+
+  inputs.forEach(el => el.addEventListener('focus', () => removeInputError(el)));
+
+  // Handlers
+  async function onFormSubmit() {
+
+    const isValidForm = inputs.every(el => {
+      const isValidInput = validate(el);
+      if (!isValidInput) { showInputError(el); };
+
+      return isValidInput;
+    });
+
+    if (!isValidForm) return;
+
+    try {
+      await login(inputEmail.value, inputPassword.value);
+      await getNews();
+
+      form.reset();
+      notify({ msg: 'Login success', className: 'alert-success' })
+    } catch (error) {
+      notify({ msg: 'Login faild', className: 'alert-danger' })
+
+    }
+
+  };
+
+  async function onAuthFormSubmit() {
+    console.log('onAuthFormSubmit is RUN');
+    try {
+      await auth(
+        email.value,
+        password.value,
+        nickname.value,
+        first_name.value,
+        last_name.value,
+        phone.value,
+        gender_orientation.value,
+        city.value,
+        country.value,
+        date_of_birth_day.value,
+        date_of_birth_month.value,
+        date_of_birth_year.value,
+      );
+      auth_form.reset();
+    } catch (error) {
+      console.log("onAuthFormSubmit--ERROR", error);
+    }
+  };
+
+  async function initApp() {
+    await locations.init();
+    formUI.setAutocompleteData(locations.shortCountriesList);
+  };
+
+});

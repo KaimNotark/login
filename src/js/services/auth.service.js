@@ -1,5 +1,6 @@
 import axios from '../plugins/axios';
 // import API_ENV from '../config/api.config.js'; -- OLD
+import API_ENV from '../config/api.config.js';
 
 /**
  * Function login. Make login request to API
@@ -21,4 +22,46 @@ export async function login(email, password) {
     console.log(err);
     return Promise.reject(err);
   }
-}
+};
+
+export async function auth(
+  email,
+  password,
+  nickname,
+  first_name,
+  last_name,
+  phone,
+  gender_orientation,
+  city,
+  country,
+  date_of_birth_day,
+  date_of_birth_month,
+  date_of_birth_year,
+) {
+  try {
+    const response = await axios.post(
+      `${API_ENV.authURL}`,
+      JSON.stringify({
+        email,
+        password,
+        nickname,
+        first_name,
+        last_name,
+        phone,
+        gender_orientation,
+        city,
+        country,
+        date_of_birth_day,
+        date_of_birth_month,
+        date_of_birth_year,
+      }),
+      { headers: { 'Content-Type': 'application/json', }, },
+    );
+    console.log('auth--RESPONSE', response);
+    return response.data;
+
+  } catch (error) {
+    console.log(error);
+    return Promise.reject(error);
+  }
+};

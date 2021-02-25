@@ -1,59 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="login-page-wrapp d-flex">
-      <div class="login-form-wrap d-flex align-items-center">
-        <div class="form-card card ml-auto">
-          <div class="card-body">
-            <h4 class="card-title">Please Login</h4>
-            <form name="loginForm">
-              <div class="form-group">
-                <label for="email">Email address</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                  data-required="email"
-                  data-invalid-message="Please provide valid email example@example.com"
-                />
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="Password"
-                  data-required="password"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Login</title>
+</head>
+
+<body>
+  <div class="login-page-wrapp d-flex">
+    <div class="login-form-wrap d-flex align-items-center">
+      <div class="form-card card ml-auto">
+        <div class="card-body">
+          <h4 class="card-title">Please Login</h4>
+          <form name="loginForm">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email"
+                data-required="email" data-invalid-message="Please provide valid email example@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password"
+                data-required="password" />
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
         </div>
-      </div>
-      <!-- /.login-form-wrap -->
-      <div class="login-greeting-screen d-flex align-items-center">
-        <div class="login-greeting-screen-text">
-          <h1 class="login-greeting-screen-title">Welcome to my app</h1>
-          <p class="login-greeting-screen-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-            inventore non accusantium earum, illo dolores reprehenderit laborum
-            ratione quos doloribus repellat eligendi deleniti. Ipsum voluptate
-            ipsa exercitationem eaque totam. A.
-          </p>
+
+        <div class="card-body">
+          <h4 class="card-title">Please Register</h4>
+          <form name="authForm">
+
+            <div class="form-group input-field">
+              <label for="Country">Country</label>
+              <input type="text" class="form-control autocomplete" id="authCountry" placeholder="Country"
+                data-required="country" />
+            </div>
+            <div class="form-group input-field">
+              <label for="City">City</label>
+              <input type="text" class="form-control autocomplete" id="authCity" placeholder="City"
+                data-required="city" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="authEmail" aria-describedby="emailHelp"
+                placeholder="Enter email" data-required="email"
+                data-invalid-message="Please provide valid email example@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="authPassword" placeholder="Password"
+                data-required="password" />
+            </div>
+            <div class="form-group">
+              <label for="Nickname">Nickname</label>
+              <input type="text" class="form-control" id="authNickname" placeholder="Nickname"
+                data-required="nickname" />
+            </div>
+            <div class="form-group">
+              <label for="First Name">First Name</label>
+              <input type="text" class="form-control" id="authFirstName" placeholder="First Name"
+                data-required="first name" />
+            </div>
+            <div class="form-group">
+              <label for="Last Name">Last Name</label>
+              <input type="text" class="form-control" id="authLastName" placeholder="Last Name"
+                data-required="last name" />
+            </div>
+            <div class="form-group">
+              <label for="Phone">Phone</label>
+              <input type="tel" class="form-control" id="authPhone" placeholder="Phone" data-required="phone" />
+            </div>
+            <div class="form-group">
+              <label for="Gender">Gender</label>
+              <input type="text" class="form-control" id="authGender" placeholder="Gender" data-required="gender" />
+            </div>
+            <div class="form-group">
+              <label for="Birth Day">Birth Day</label>
+              <input type="number" class="form-control" id="authBirthDay" placeholder="Birth Day" data-required="day" />
+            </div>
+            <div class="form-group">
+              <label for="Birth Month">Birth Month</label>
+              <input type="number" class="form-control" id="authBirthMonth" placeholder="Birth Month"
+                data-required="month" />
+            </div>
+            <div class="form-group">
+              <label for="Birth Year">Birth Year</label>
+              <input type="number" class="form-control" id="authBirthYear" placeholder="Birth Year"
+                data-required="year" />
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
         </div>
+
       </div>
-      <!-- /.login-greeting-screen -->
     </div>
-    <!-- /.login-page-wrapp -->
-  </body>
+    <!-- /.login-form-wrap -->
+    <div class="login-greeting-screen d-flex align-items-center">
+      <div class="login-greeting-screen-text">
+        <h1 class="login-greeting-screen-title">Welcome to my app</h1>
+        <p class="login-greeting-screen-description">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
+          inventore non accusantium earum, illo dolores reprehenderit laborum
+          ratione quos doloribus repellat eligendi deleniti. Ipsum voluptate
+          ipsa exercitationem eaque totam. A.
+        </p>
+      </div>
+    </div>
+    <!-- /.login-greeting-screen -->
+  </div>
+  <!-- /.login-page-wrapp -->
+</body>
+
 </html>
